@@ -1,0 +1,74 @@
+.Auth {
+    background: linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295)), url('../../assets/fundoTelaLogin.jpg');
+    background-size: cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+    height: 100%;
+}
+
+.FormDiv {
+    width: 571px;
+    height: 523px;
+    background-color: #F9F9F9;
+    opacity: .84;
+    border-radius: 15px;
+    padding: 50px 0;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -261.5px 0 0 -285.5px;   
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.Copyright {
+    position: absolute;
+    top: 94%;
+    left: 50%;
+    margin: 0 0 0 -285.5px;
+
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.Icon, .HeartIcon {
+    font-size: 18px;
+    vertical-align: middle;    
+}
+
+.HeartIcon {
+    color: rgb(236, 44, 44);
+}
+
+.ReactIcon {
+    width: 20px;
+    vertical-align: middle;
+}
+
+.InputContainer {
+    text-align: center;
+}
+
+.InputContainer > div {
+    margin-bottom: 15px;
+}
+
+.FormHeader {
+    font-size: 30px;    
+}
+
+.FormFooter {
+    color: rgb(105, 102, 102);
+    font-size: 15px;
+
+    font-weight: 600;
+}
+
+.FormFooter span {
+    margin: 3px;
+}
