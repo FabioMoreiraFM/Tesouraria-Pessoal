@@ -16,6 +16,8 @@ import reactIcon from './../../assets/react.png'
 import styles from './Auth.module.css'
 import { makeStyles } from '@material-ui/core';
 
+import axios from 'axios'
+
 const useStylesIcon = makeStyles(theme => ({
     root: {
         color: 'grey'
@@ -59,6 +61,10 @@ const Auth = props => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [isSignIn, setIsSignIn] = React.useState(true)
 
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const [confirmPassword, setConfirmPassword] = React.useState('')
+
     const classes = useStylesIcon();
     const classesInput = useStylesInput();
     const classesButton = useStylesButton();
@@ -72,8 +78,30 @@ const Auth = props => {
         event.preventDefault();
     };
 
+    const signIn = () => {
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+    
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC4is8YGhSPHzagN-9XlgxOB07aNqrqj9c', authData)
+            .then(response => console.log(response.data))
+    }
+    
+    const signUp = () => {
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC4is8YGhSPHzagN-9XlgxOB07aNqrqj9c', authData)
+            .then(response => console.log(response.data))
+    }
+
     let repeatPasswordField = (
         <Input classes={{root: classesInput.root}} variant="outlined" placeholder={"Repetir Nova Senha"} type={showPassword ? 'text' : 'password'} 
+        value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}
         startAdornment={
             <InputAdornment classes={{root: classes.root}} position="start">
                 <LockIcon />
@@ -101,7 +129,7 @@ const Auth = props => {
                 </div>
 
                 <div className={styles.InputContainer}>
-                    <Input classes={{root: classesInput.root}} variant="outlined" placeholder="E-mail" 
+                    <Input classes={{root: classesInput.root}} variant="outlined" placeholder="E-mail" value={email} onChange={(event) => setEmail(event.target.value)}
                             startAdornment={
                                 <InputAdornment classes={{root: classes.root}} position="start">
                                     <PersonIcon />
@@ -110,6 +138,7 @@ const Auth = props => {
                     />
 
                     <Input classes={{root: classesInput.root}} variant="outlined" placeholder={isSignIn ? "Senha" : "Nova Senha"} type={showPassword ? 'text' : 'password'} 
+                            value={password} onChange={(event) => setPassword(event.target.value)}
                             startAdornment={
                                 <InputAdornment classes={{root: classes.root}} position="start">
                                     <LockIcon />
@@ -129,10 +158,9 @@ const Auth = props => {
                     />
 
                     {isSignIn ? null : repeatPasswordField}
-
                 </div>
                 <div>
-                    <Button variant="contained" classes={{root: classesButton.root}}>
+                    <Button variant="contained" classes={{root: classesButton.root}} onClick={isSignIn ? signIn : signUp}>
                         {isSignIn ? 'Entrar' : 'Cadastrar'}
                     </Button>
                 </div>                    
