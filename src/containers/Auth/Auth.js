@@ -123,17 +123,17 @@ const Auth = props => {
     )
 
     return (
-        <div className={styles.Auth}>
+        <section className={styles.Auth}>
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={4000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error">
                 {props.error}
                 </Alert>
             </Snackbar>
 
-            <div className={styles.FormDiv}>
-                <div className={styles.FormHeader}>
+            <article className={styles.FormDiv}>
+                <header className={styles.FormHeader}>
                     <span>{isSignIn ? 'Acesse Agora!' : 'Cadastre-se!'}</span>
-                </div>
+                </header>
 
                 <div className={styles.InputContainer}>
                     <Input classes={{root: classesInput.root}} variant="outlined" placeholder="E-mail" value={email} onChange={(event) => setEmail(event.target.value)}
@@ -174,11 +174,11 @@ const Auth = props => {
                 <div className={styles.FormFooter}>
                     <span>{isSignIn ? 'Não possui uma conta?' : 'Já possui uma conta?'}</span><Button onClick={() => setIsSignIn(!isSignIn)} color="primary" classes={{root: classesButtonText.root}} >Clique aqui.</Button>
                 </div>
-            </div>
-            <div className={styles.Copyright}>
+            </article>
+            <footer className={styles.Copyright}>
                 <CopyrightIcon className={styles.Icon}/> Fabio Moreira, todos os direitos reservados. Feito com <FavoriteIcon className={styles.HeartIcon}/> e um pouco de <img className={styles.ReactIcon} src={reactIcon} alt="React Icon"/>.                
-            </div>
-        </div>
+            </footer>
+        </section>
     )
 }
 
