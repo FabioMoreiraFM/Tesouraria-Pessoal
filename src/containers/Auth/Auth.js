@@ -1,7 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 
 import Input from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -14,54 +12,13 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 
+import Snackbar from '../../components/UI/SnackBar/CustomSnackBar'
+
 import reactIcon from './../../assets/react.png'
 import * as actions from '../../store/actions/index'
+import * as materialStyles from './MaterialUIStyles'
 
 import styles from './Auth.module.css'
-import { makeStyles } from '@material-ui/core';
-
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-const useStylesIcon = makeStyles(theme => ({
-    root: {
-        color: 'grey'
-    }
-}))
-
-const useStylesInput = makeStyles(theme => ({
-    root: {
-        width: '330px',
-        height: '41px',
-        borderRadius: 100, 
-        fontSize: '15px',
-        border: '1px solid',
-        borderColor: '#b8b6b6',
-        boxShadow: '0 3px #e3e1e1',
-        fontFamily: 'Bahnschrift'
-    }
-}))
-
-const useStylesButton = makeStyles(theme => ({
-    root: {
-        backgroundColor: 'black',
-        opacity: 0.84,
-        fontSize: '20px',
-        color: 'white',
-        borderRadius: 100,        
-        width: '330px',
-        '&:hover': {
-            backgroundColor: 'grey'
-        }        
-    }
-}))
-
-const useStylesButtonText = makeStyles(theme => ({
-    root: {
-        textTransform: 'none'    
-    }
-}))
 
 const Auth = props => {
     const [showPassword, setShowPassword] = React.useState(false)
@@ -71,33 +28,17 @@ const Auth = props => {
     const [password, setPassword] = React.useState('')
     const [confirmPassword, setConfirmPassword] = React.useState('')
 
-    const [open, setOpen] = React.useState(false);
-
-    const classes = useStylesIcon();
-    const classesInput = useStylesInput();
-    const classesButton = useStylesButton();
-    const classesButtonText = useStylesButtonText();
+    const classes = materialStyles.useStylesIcon();
+    const classesInput = materialStyles.useStylesInput();
+    const classesButton = materialStyles.useStylesButton();
+    const classesButtonText = materialStyles.useStylesButtonText();
     
-    React.useEffect(() => {
-        if (props.error) {
-            setOpen(true)
-        }
-    }, [props.error])
-
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
-    };
-
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setOpen(false);
     };
 
     let repeatPasswordField = (
@@ -110,11 +51,7 @@ const Auth = props => {
         }
         endAdornment={
             <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
+              <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                 {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
@@ -124,11 +61,7 @@ const Auth = props => {
 
     return (
         <section className={styles.Auth}>
-            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={4000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error">
-                {props.error}
-                </Alert>
-            </Snackbar>
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} error={props.error} autoHideDuration={4000} severity="error"/>
 
             <article className={styles.FormDiv}>
                 <header className={styles.FormHeader}>
@@ -153,17 +86,12 @@ const Auth = props => {
                             }
                             endAdornment={
                                 <InputAdornment position="end">
-                                  <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                  >
+                                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                                     {showPassword ? <Visibility /> : <VisibilityOff />}
                                   </IconButton>
                                 </InputAdornment>
                             }
                     />
-
                     {isSignIn ? null : repeatPasswordField}
                 </div>
                 <div>
@@ -172,7 +100,10 @@ const Auth = props => {
                     </Button>
                 </div>                    
                 <div className={styles.FormFooter}>
-                    <span>{isSignIn ? 'Não possui uma conta?' : 'Já possui uma conta?'}</span><Button onClick={() => setIsSignIn(!isSignIn)} color="primary" classes={{root: classesButtonText.root}} >Clique aqui.</Button>
+                    <span>{isSignIn ? 'Não possui uma conta?' : 'Já possui uma conta?'}</span>
+                    <Button onClick={() => setIsSignIn(!isSignIn)} color="primary" classes={{root: classesButtonText.root}} >
+                        Clique aqui.
+                    </Button>
                 </div>
             </article>
             <footer className={styles.Copyright}>
