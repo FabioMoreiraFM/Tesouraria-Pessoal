@@ -1,4 +1,7 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import Input from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -12,11 +15,14 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 
 import reactIcon from './../../assets/react.png'
+import * as actions from '../../store/actions/index'
 
 import styles from './Auth.module.css'
 import { makeStyles } from '@material-ui/core';
 
-import axios from 'axios'
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStylesIcon = makeStyles(theme => ({
     root: {
@@ -65,11 +71,19 @@ const Auth = props => {
     const [password, setPassword] = React.useState('')
     const [confirmPassword, setConfirmPassword] = React.useState('')
 
+    const [open, setOpen] = React.useState(false);
+
     const classes = useStylesIcon();
     const classesInput = useStylesInput();
     const classesButton = useStylesButton();
     const classesButtonText = useStylesButtonText();
     
+    React.useEffect(() => {
+        if (props.error) {
+            setOpen(true)
+        }
+    }, [props.error])
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -78,26 +92,13 @@ const Auth = props => {
         event.preventDefault();
     };
 
-    const signIn = () => {
-        const authData = {
-            email: email,
-            password: password,
-            returnSecureToken: true
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
         }
     
-        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC4is8YGhSPHzagN-9XlgxOB07aNqrqj9c', authData)
-            .then(response => console.log(response.data))
-    }
-    
-    const signUp = () => {
-        const authData = {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        }
-        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC4is8YGhSPHzagN-9XlgxOB07aNqrqj9c', authData)
-            .then(response => console.log(response.data))
-    }
+        setOpen(false);
+    };
 
     let repeatPasswordField = (
         <Input classes={{root: classesInput.root}} variant="outlined" placeholder={"Repetir Nova Senha"} type={showPassword ? 'text' : 'password'} 
@@ -123,6 +124,12 @@ const Auth = props => {
 
     return (
         <div className={styles.Auth}>
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={4000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error">
+                {props.error}
+                </Alert>
+            </Snackbar>
+
             <div className={styles.FormDiv}>
                 <div className={styles.FormHeader}>
                     <span>{isSignIn ? 'Acesse Agora!' : 'Cadastre-se!'}</span>
@@ -160,7 +167,7 @@ const Auth = props => {
                     {isSignIn ? null : repeatPasswordField}
                 </div>
                 <div>
-                    <Button variant="contained" classes={{root: classesButton.root}} onClick={isSignIn ? signIn : signUp}>
+                    <Button variant="contained" classes={{root: classesButton.root}} onClick={() => props.onTryAuthenticate(email, password, isSignIn)}>
                         {isSignIn ? 'Entrar' : 'Cadastrar'}
                     </Button>
                 </div>                    
@@ -175,4 +182,16 @@ const Auth = props => {
     )
 }
 
-export default Auth;
+const mapStateToProps = state => {
+    return {
+        error: state.error
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onTryAuthenticate: (email, password, isSignIn) => dispatch(actions.auth(email, password, isSignIn))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
