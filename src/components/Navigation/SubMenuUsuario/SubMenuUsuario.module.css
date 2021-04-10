@@ -1,0 +1,38 @@
+.SubMenuUsuario ul{   
+    margin: 0; 
+    padding: 0;
+    
+    color: white;
+    list-style: none;
+}
+
+.SubMenuUsuario li a{
+    display: flex;
+    align-items: center;   
+    color: inherit;
+    height: 40px;
+    padding: 0 20px 0 40px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.SubMenuUsuario li:hover{
+    background-color: #E3E1E1;
+    color: black;
+}
+
+.SubMenuUsuario li svg {
+    margin-right: 10px;
+}
+
+.Hidden {
+    max-height: 0px;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+}
+
+.Active{
+    transition: max-height 0.30s ease-in;
+    max-height: 100px;
+    overflow: hidden;
+}

@@ -6,26 +6,27 @@ import {ReactComponent as Patrimonio} from '../../../assets/patrimonio.svg'
 import {ReactComponent as Receitas} from '../../../assets/receitas.svg'
 
 import styles from './NavigationItems.module.css'
+import NavigationItem from './NavigationItem/NavigationItem'
 
 export const NavigationItems = () => {
     return (
         <ul className={styles.NavigationItems}>
-            <li>
+            <NavigationItem link="/">
                 <PainelControle />
                 <span>Painel de Controle</span>
-            </li>
-            <li>
+            </NavigationItem>
+            <NavigationItem link="/">
                 <Dividas />
                 <span>Dívidas</span>
-            </li>            
-            <li>
+            </NavigationItem>
+            <NavigationItem link="/">
                 <Receitas />
                 <span>Receitas</span>
-            </li>
-            <li>
+            </NavigationItem>
+            <NavigationItem link="/">
                 <Patrimonio />
                 <span>Patrimônio</span>
-            </li>                        
+            </NavigationItem>    
         </ul>
     )
 }

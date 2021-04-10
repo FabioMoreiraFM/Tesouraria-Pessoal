@@ -6,11 +6,15 @@
     color: white;
 }
 
-.NavigationItems li{
+.NavigationItems li a{
     display: flex;
     align-items: center;
     height: 65px;
     padding: 0 20px 0 20px;
+
+    outline: none;
+    text-decoration: none;
+    color: inherit;
 }
 
 .NavigationItems li:hover{
