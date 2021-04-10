@@ -1,0 +1,18 @@
+.Logo {
+    display: flex;
+    color: white;
+    font-size: 21px;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+
+.Logo img {
+    width: 50px;
+}
+
+.Logo span {
+    text-align: center;
+    font-family: 'Segoe Print';
+    line-height: 25px;
+}

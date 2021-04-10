@@ -10,7 +10,7 @@ class App extends Component {
   render () {
     let routes = (
       <Switch>
-        <Route path="/home" component={Home} />
+        <Route path="/" component={Home} />
         <Route path="/" exact component={Auth} />
         <Redirect to="/" />
       </Switch>        
