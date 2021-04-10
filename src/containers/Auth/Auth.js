@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 
 import Input from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -13,7 +14,6 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 
 import Snackbar from '../../components/UI/SnackBar/CustomSnackBar'
-
 import reactIcon from './../../assets/react.png'
 import * as actions from '../../store/actions/index'
 import * as materialStyles from './MaterialUIStyles'
@@ -61,6 +61,8 @@ const Auth = props => {
 
     return (
         <section className={styles.Auth}>
+            {props.isAuthenticated ? <Redirect to='/home' /> : null}
+
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} error={props.error} autoHideDuration={4000} severity="error"/>
 
             <article className={styles.FormDiv}>
@@ -115,7 +117,8 @@ const Auth = props => {
 
 const mapStateToProps = state => {
     return {
-        error: state.error
+        error: state.error,
+        isAuthenticated: state.token !== null
     }
 }
 
