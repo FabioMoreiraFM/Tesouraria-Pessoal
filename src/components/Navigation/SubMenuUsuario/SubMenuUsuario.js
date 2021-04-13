@@ -14,7 +14,7 @@ export const SubMenuUsuario = (props) => {
             <NavigationItem link="/">
                 <SettingsIcon /> Configurações
             </NavigationItem>
-            <NavigationItem link="/">
+            <NavigationItem link="/logout">
                 <ExitToAppIcon /> Sair
             </NavigationItem>
         </ul>
