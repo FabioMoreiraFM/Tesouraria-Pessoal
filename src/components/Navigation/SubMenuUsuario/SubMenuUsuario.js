@@ -11,7 +11,7 @@ export const SubMenuUsuario = (props) => {
     return (
         <nav className={props.exibirSubMenu ? [styles.SubMenuUsuario, styles.Active].join(' ') : [styles.SubMenuUsuario, styles.Hidden].join(' ')}>
         <ul>
-            <NavigationItem link="/">
+            <NavigationItem link="/home/auth">
                 <SettingsIcon /> Configurações
             </NavigationItem>
             <NavigationItem link="/logout">

@@ -11,7 +11,7 @@ import NavigationItem from './NavigationItem/NavigationItem'
 export const NavigationItems = () => {
     return (
         <ul className={styles.NavigationItems}>
-            <NavigationItem link="/">
+            <NavigationItem link="/home/painelControle">
                 <PainelControle />
                 <span>Painel de Controle</span>
             </NavigationItem>
