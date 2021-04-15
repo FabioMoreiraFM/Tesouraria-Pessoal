@@ -61,7 +61,7 @@ const Auth = props => {
 
     return (
         <section className={styles.Auth}>
-            {props.isAuthenticated ? <Redirect to='/home' /> : null}
+            {props.isAuthenticated ? <Redirect to='/home/dashboard' /> : null}
 
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} error={props.error} autoHideDuration={4000} severity="error"/>
 
