@@ -11,19 +11,19 @@ import NavigationItem from './NavigationItem/NavigationItem'
 export const NavigationItems = () => {
     return (
         <ul className={styles.NavigationItems}>
-            <NavigationItem link="/home/painelControle">
+            <NavigationItem link="/home/dashboard">
                 <PainelControle />
                 <span>Painel de Controle</span>
             </NavigationItem>
-            <NavigationItem link="/">
+            <NavigationItem link="/home/debts">
                 <Dividas />
                 <span>Dívidas</span>
             </NavigationItem>
-            <NavigationItem link="/">
+            <NavigationItem link="/home/income">
                 <Receitas />
                 <span>Receitas</span>
             </NavigationItem>
-            <NavigationItem link="/">
+            <NavigationItem link="/home/assets">
                 <Patrimonio />
                 <span>Patrimônio</span>
             </NavigationItem>    
