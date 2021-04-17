@@ -12,8 +12,8 @@
     color: white;
     text-align: center;
 
-    background: rgb(66,194,227);
-    background: radial-gradient(circle, rgba(66,194,227,1) 0%, rgba(33,97,114,1) 100%);
+    -webkit-box-shadow: 12px 7px 7px 0px rgba(0,0,0,0.31); 
+    box-shadow: 12px 7px 7px 0px rgba(0,0,0,0.31);
 }
 
 .Card svg{
