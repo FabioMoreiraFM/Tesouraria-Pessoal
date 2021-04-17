@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Routecard from '../../../../components/Cards/Routecard/Routecard';
+import Routecard from 'components/Cards/Routecard/Routecard';
 
 import styles from './Assets.module.css'
 

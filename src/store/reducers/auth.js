@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
-import getDefaultAuthErrorMessage from '../../utils/enums/AuthEnum'
+import getDefaultAuthErrorMessage from 'utils/enums/AuthEnum'
 
 const initialState = {
     token: null,

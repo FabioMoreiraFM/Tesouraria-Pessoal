@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 
 import styles from './Dashboard.module.css'
 
-import Card from '../../../../components/Cards/Dashboardcard/Dashboardcard'
+import Card from 'components/Cards/Dashboardcard/Dashboardcard'
 
-import {ReactComponent as AssetsIcon} from '../../../../assets/assetsCard.svg'
-import {ReactComponent as DebtIcon} from '../../../../assets/debtCard.svg'
-import {ReactComponent as Income} from '../../../../assets/incomeCard.svg'
+import {ReactComponent as AssetsIcon} from 'assets/assetsCard.svg'
+import {ReactComponent as DebtIcon} from 'assets/debtCard.svg'
+import {ReactComponent as Income} from 'assets/incomeCard.svg'
 
-import CustomResponsiveLine from '../../../../components/UI/Charts/ResponsiveLine/ResponsiveLine'
+import CustomResponsiveLine from 'components/UI/Charts/ResponsiveLine/ResponsiveLine'
 
 class Dashboard extends Component {
     render() {

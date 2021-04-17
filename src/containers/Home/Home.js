@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {Route, Switch} from 'react-router-dom'
 
-import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
+import SideDrawer from 'components/Navigation/SideDrawer/SideDrawer';
 import Content from './Content/Content';
 import Dashboard from './Content/Dashboard/Dashboard';
 import Debts from './Content/Debts/Debts';
 import Income from './Content/Income/Income';
 import Assets from './Content/Assets/Assets';
 
-import {ReactComponent as DebtIcon} from '../../assets/dividas.svg'
-import {ReactComponent as DashboardIcon} from '../../assets/painelControle.svg'
-import {ReactComponent as AssetsIcon} from '../../assets/patrimonio.svg'
-import {ReactComponent as IncomeIcon} from '../../assets/receitas.svg'
+import {ReactComponent as DebtIcon} from 'assets/dividas.svg'
+import {ReactComponent as DashboardIcon} from 'assets/painelControle.svg'
+import {ReactComponent as AssetsIcon} from 'assets/patrimonio.svg'
+import {ReactComponent as IncomeIcon} from 'assets/receitas.svg'
 
 import styles from './Home.module.css'
 

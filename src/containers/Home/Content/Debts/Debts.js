@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Routecard from '../../../../components/Cards/Routecard/Routecard';
-import CustomTable from '../../../../components/UI/Table/Table';
+import Routecard from 'components/Cards/Routecard/Routecard';
+import CustomTable from 'components/UI/Table/Table';
 
 import styles from './Debts.module.css'
 

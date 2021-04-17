@@ -13,9 +13,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 
-import Snackbar from '../../components/UI/SnackBar/CustomSnackBar'
-import reactIcon from './../../assets/react.png'
-import * as actions from '../../store/actions/index'
+import Snackbar from 'components/UI/SnackBar/CustomSnackBar'
+import reactIcon from 'assets/react.png'
+import * as actions from 'store/actions/index'
 import * as materialStyles from './MaterialUIStyles'
 
 import styles from './Auth.module.css'
