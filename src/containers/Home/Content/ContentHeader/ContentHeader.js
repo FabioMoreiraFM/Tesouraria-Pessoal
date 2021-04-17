@@ -15,6 +15,7 @@ const ContentHeader = (props) =>  {
                 <span>{props.title}</span>
                 <span>{props.subtitle}</span>
             </div>
+            {props.showNotifications ?
             <div className={styles.HeaderIcons} onMouseOver={() => setShowNotificationList(true)} onMouseOut={() => setShowNotificationList(false)} >
                 <NotificationsIcon />
                 { showNotificationList ?
@@ -30,6 +31,7 @@ const ContentHeader = (props) =>  {
                 </div>
                 : null }
             </div>
+            : null }
         </header>
     )
 }

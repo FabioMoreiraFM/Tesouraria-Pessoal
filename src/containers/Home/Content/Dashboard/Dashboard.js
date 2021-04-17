@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import styles from './Dashboard.module.css'
 
-import Card from '../../../../components/Card/Card'
+import Card from '../../../../components/Cards/DashboardCard/Dashboardcard'
 
 import {ReactComponent as AssetsIcon} from '../../../../assets/assetsCard.svg'
 import {ReactComponent as DebtIcon} from '../../../../assets/debtCard.svg'
