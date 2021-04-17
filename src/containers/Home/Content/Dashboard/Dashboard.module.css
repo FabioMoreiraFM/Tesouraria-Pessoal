@@ -1,5 +1,19 @@
 .Dashboard {
     display: flex;  
+    flex-direction: column; 
+    justify-content: space-around;   
+}
+
+.CardsLine {
+    display: flex;  
 
     margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.Chart {
+    flex-grow: 1;
+
+    height: 38vh;
+    width: 99%;
 }
