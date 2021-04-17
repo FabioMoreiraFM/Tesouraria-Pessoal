@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
+import Routecard from '../../../../components/Cards/Routecard/Routecard';
 
-import styles from './Debts.module.css'
+import styles from './Income.module.css'
 
-class Debts extends Component {
+class Income extends Component {
     render() {
         return (
-            <span></span>
+            <div className={styles.Income}>
+                <Routecard title="Gerenciar Receitas" subtitle="Adicione ou edite receitas." />
+                <Routecard title="Histórico" subtitle="Analise ou encontre receitas."/>
+            </div>
         )
     }
 }
 
-export default Debts;
+export default Income;
