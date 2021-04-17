@@ -51,3 +51,35 @@
     font-size: 17px;
 }
 
+.HeaderIcons {
+    width: 50px;
+}
+
+.Notifications {
+    position: absolute;
+    top: 70px;
+    right: 40px;
+
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(236,236,236,1) 100%);
+    -webkit-box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.23); 
+    box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.23);
+
+    width: 310px;
+    height: 200px;
+    border-radius: 10px;
+    
+    padding: 10px 5px 10px 10px;
+
+    font-size: 13px;
+    font-weight: 100;
+
+    word-wrap: break-word;
+    word-break: keep-all;
+}
+
+.Notifications hr {    
+    border: 0;
+    height: 1px;
+    background: rgb(189, 187, 187);
+}
