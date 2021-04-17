@@ -1,6 +1,17 @@
 .Debts {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: space-evenly;    
+    
+    height: 100%;
+}
 
-    padding-top: 30px;
+.Cards {
+    display: flex;
+    justify-content: space-evenly;    
+}
+
+.Table {
+    align-self: center;
+    width: 90%;    
 }
