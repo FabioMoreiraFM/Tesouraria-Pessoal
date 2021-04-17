@@ -12,9 +12,9 @@ class Dashboard extends Component {
     render() {
         return (
             <article className={styles.Dashboard}>
-                <Card value="R$ 10.000,00" title="Dívidas a Vencer" icon={<DebtIcon />} />
-                <Card value="R$ 5.000,00" title="Receitas Mensais" icon={<Income />} />
-                <Card value="R$ 50.000,00" title="Patrimônio Atual" icon={<AssetsIcon />} />
+                <Card value="R$ 10.000,00" title="Dívidas a Vencer" icon={<DebtIcon />} background="red"/>
+                <Card value="R$ 5.000,00" title="Receitas Mensais" icon={<Income />} background="green" />
+                <Card value="R$ 50.000,00" title="Patrimônio Atual" icon={<AssetsIcon />} background="blue"/>
             </article>
         )
     }
