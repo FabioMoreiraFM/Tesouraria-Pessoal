@@ -3,7 +3,6 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,10 +22,10 @@ const Manager = () => {
             <Grid container spacing={4} >
                 <Grid container item xd={12} spacing={3}>
                     <Grid item xs={4}>
-                    <TextField id="standard-size" label="Dívida" classes={{root: input.root}} />
+                        <TextField id="standard-size" label="Dívida" classes={{root: input.root}} />
                     </Grid>
                     <Grid item xs={4}>
-                    <TextField id="standard-basic" label="Valor" classes={{root: input.root}}/>
+                        <TextField id="standard-basic" label="Valor" classes={{root: input.root}}/>
                     </Grid>
                     <Grid item xs={4}>
                         <FormControl classes={{root: input.root}}>
@@ -41,7 +40,7 @@ const Manager = () => {
                 </Grid>
                 <Grid container item xd ={12} spacing={3}>
                     <Grid item xs={4}>
-                        <DateInput classes={{root: input.root}}/>
+                        <DateInput classes={{root: input.root}} label="Data de Vencimento"/>
                     </Grid>
                     <Grid item xs={4}>
                         <FormControl classes={{root: input.root}}>
