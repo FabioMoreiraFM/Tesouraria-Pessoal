@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Routecard from 'components/Cards/Routecard/Routecard';
 import CustomTable from 'components/UI/Table/Table';
 
+import {withRouter} from 'react-router-dom'
+
 import styles from './Debts.module.css'
 
 const tableHeader = [
@@ -39,14 +41,19 @@ const handleChangeRowsPerPage = (event) => {
 
 };
 
+
+
 class Debts extends Component {
+    goTo = (link) => {
+        this.props.history.push(link);
+    }
 
     render() {
         return (
             <div className={styles.Debts}>
                 <div className={styles.Cards}>
-                    <Routecard title="Gerenciar Dívidas" subtitle="Adicione ou edite dívidas." />
-                    <Routecard title="Histórico" subtitle="Analise ou encontre dívidas."/>
+                    <Routecard title="Gerenciar Dívidas" subtitle="Adicione ou edite dívidas." goTo={() => this.goTo('/home/debtManager')} />
+                    <Routecard title="Histórico" subtitle="Analise ou encontre dívidas." goTo={() => this.goTo('/home/history')} />
                 </div>
                 <div className={styles.Table}>
                     <CustomTable title="Dívidas a vencer (Próximos 30 dias)" header={tableHeader} rows={rows} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
@@ -56,4 +63,4 @@ class Debts extends Component {
     }
 }
 
-export default Debts;
+export default withRouter(Debts);

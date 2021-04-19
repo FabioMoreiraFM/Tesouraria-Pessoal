@@ -11,7 +11,7 @@ const Routecard = (props) => {
         <div className={styles.Routecard}>
             <span>{props.title}</span>
             <span>{props.subtitle}</span>
-            <Button variant="contained" classes={{root: classesButton.root}}>
+            <Button variant="contained" classes={{root: classesButton.root}} onClick={props.goTo}>
                 Continuar
             </Button>
         </div>
