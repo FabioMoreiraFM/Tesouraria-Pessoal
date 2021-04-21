@@ -53,7 +53,7 @@ class Debts extends Component {
             <div className={styles.Debts}>
                 <div className={styles.Cards}>
                     <Routecard title="Gerenciar Dívidas" subtitle="Adicione ou edite dívidas." goTo={() => this.goTo('/home/debtManager')} />
-                    <Routecard title="Histórico" subtitle="Analise ou encontre dívidas." goTo={() => this.goTo('/home/history')} />
+                    <Routecard title="Histórico" subtitle="Analise ou encontre dívidas." goTo={() => this.goTo('/home/debtHistory')} />
                 </div>
                 <div className={styles.Table}>
                     <CustomTable title="Dívidas a vencer (Próximos 30 dias)" header={tableHeader} rows={rows} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
