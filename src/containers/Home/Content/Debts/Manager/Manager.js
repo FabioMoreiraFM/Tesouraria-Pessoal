@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -17,25 +18,14 @@ import styles from './Manager.module.css'
 import * as materialStyles from './MaterialUIStyles'
 
 const tableHeader = [
-    {name: 'Dívidas', align: 'left'},
-    {name: 'Valor', align: 'center'},
-    {name: 'Data de Vencimento', align: 'center'},
-    {name: 'Tipo de Dívida', align: 'center'},
-    {name: 'Possui Juros ou Multa?', align: 'center'},
-    {name: 'Impacto Financeiro em Caso de Atraso', align: 'center'},
-    {name: 'Ações', align: 'center'}
+    {name: 'Dívidas', align: 'left', key: 'divida'},
+    {name: 'Valor', align: 'center', key: 'valor'},
+    {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento'},
+    {name: 'Tipo de Dívida', align: 'center', key: 'tipoDivida'},
+    {name: 'Possui Juros ou Multa?', align: 'center', key: 'jurosOuMulta'},
+    {name: 'Impacto Financeiro em Caso de Atraso', align: 'center', key: 'impactoAtraso'},
+    {name: 'Ações', align: 'center', key: 'acoes'}
 ]
-
-function createData(divida, valor, dtVencimento, tipoDivida, jurosOuMulta, impactoFinanceiro, acoes) {
-    return {'receita': {valor: divida, position: 'left'}, 
-            'valor': {valor: valor, position: 'center'}, 
-            'dtVencimento': {valor: dtVencimento, position: 'center'}, 
-            'tipoDivida': {valor: tipoDivida, position: 'center'}, 
-            'jurosOuMulta': {valor: jurosOuMulta, position: 'center'},
-            'impactoFinanceiro': {valor: impactoFinanceiro, position: 'center'},
-            'acoes': {valor: actionButtons, position: 'center'},
-        };
-}
 
 const actionButtons = (
     <React.Fragment>
@@ -44,14 +34,6 @@ const actionButtons = (
     </React.Fragment>
 )
   
-const rows = [
-    createData('IPTU', 'R$ 1.000,00', '28/02/2021', 'Imposto', 'Sim', 'Médio'),
-    createData('Cartão de Crédito', 'R$ 200,00', '15/02/2021', 'Pessoal', 'Sim', 'Catastrófico'),
-    createData('Empréstimo Familiar', 'R$ 100,00', '10/02/2021', 'Pessoal', 'Não', 'Baixo'),
-    createData('Seguro do Carro - Parcela (5/10)', 'R$ 250,00', '01/03/2021', 'Seguro', 'Não', 'Baixo'),
-    createData('Faculdade - Parcela (20/400)', 'R$ 200,00', '01/03/2021', 'Educação', 'Sim', 'Médio')
-];
-
 const handleChangePage = (event, newPage) => {
 
 };
@@ -60,9 +42,28 @@ const handleChangeRowsPerPage = (event) => {
 
 };
 
+const appendActions = (debtObject) => {
+    for (let x in debtObject) {
+        debtObject[x]['acoes'] = actionButtons
+    }
+
+    return debtObject
+}
+
 const Manager = () => {
+    const [debts, setDebts] = React.useState({})
+
     const classesButton = materialStyles.useStylesButton();
     const input = materialStyles.useStylesInput();
+
+    React.useEffect(() => {
+        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts.json";
+        axios.get(url)
+        .then(response => {
+            let debtObjects = appendActions(response.data)
+            setDebts(debtObjects)
+        })
+    }, [debts])
 
     return (
         <React.Fragment>
@@ -112,7 +113,7 @@ const Manager = () => {
             </Grid>            
         </div>     
         <div className={styles.Table}>
-            <CustomTable title="Dívidas Cadastradas" header={tableHeader} rows={rows} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
+            <CustomTable title="Dívidas Cadastradas" header={tableHeader} rows={debts} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
         </div>    
         </React.Fragment>          
     )

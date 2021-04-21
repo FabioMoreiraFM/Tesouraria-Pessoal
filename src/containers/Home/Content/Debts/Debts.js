@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+
 import Routecard from 'components/Cards/Routecard/Routecard';
 import CustomTable from 'components/UI/Table/Table';
 
@@ -7,31 +9,13 @@ import {withRouter} from 'react-router-dom'
 import styles from './Debts.module.css'
 
 const tableHeader = [
-    {name: 'Dívidas', align: 'left'},
-    {name: 'Valor', align: 'center'},
-    {name: 'Data de Vencimento', align: 'center'},
-    {name: 'Tipo de Dívida', align: 'center'},
-    {name: 'Possui Juros ou Multa?', align: 'center'},
-    {name: 'Impacto Financeiro em Caso de Atraso', align: 'center'}
+    {name: 'Dívidas', align: 'left', key: 'divida'},
+    {name: 'Valor', align: 'center', key: 'valor'},
+    {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento'},
+    {name: 'Tipo de Dívida', align: 'center', key: 'tipoDivida'},
+    {name: 'Possui Juros ou Multa?', align: 'center', key: 'jurosOuMulta'},
+    {name: 'Impacto Financeiro em Caso de Atraso', align: 'center', key: 'impactoAtraso'}
 ]
-
-function createData(divida, valor, dtVencimento, tipoDivida, jurosOuMulta, impactoFinanceiro) {
-    return {'receita': {valor: divida, position: 'left'}, 
-            'valor': {valor: valor, position: 'center'}, 
-            'dtVencimento': {valor: dtVencimento, position: 'center'}, 
-            'tipoDivida': {valor: tipoDivida, position: 'center'}, 
-            'jurosOuMulta': {valor: jurosOuMulta, position: 'center'},
-            'impactoFinanceiro': {valor: impactoFinanceiro, position: 'center'},
-        };
-}
-  
-const rows = [
-    createData('IPTU', 'R$ 1.000,00', '28/02/2021', 'Imposto', 'Sim', 'Médio'),
-    createData('Cartão de Crédito', 'R$ 200,00', '15/02/2021', 'Pessoal', 'Sim', 'Catastrófico'),
-    createData('Empréstimo Familiar', 'R$ 100,00', '10/02/2021', 'Pessoal', 'Não', 'Baixo'),
-    createData('Seguro do Carro - Parcela (5/10)', 'R$ 250,00', '01/03/2021', 'Seguro', 'Não', 'Baixo'),
-    createData('Faculdade - Parcela (20/400)', 'R$ 200,00', '01/03/2021', 'Educação', 'Sim', 'Médio')
-];
 
 const handleChangePage = (event, newPage) => {
 
@@ -41,11 +25,21 @@ const handleChangeRowsPerPage = (event) => {
 
 };
 
-
-
 class Debts extends Component {
+    state = {
+        debts: null
+    }
+
     goTo = (link) => {
         this.props.history.push(link);
+    }
+
+    componentDidMount() {
+        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts.json";
+        axios.get(url)
+        .then(response => {
+            this.setState({debts: response.data})
+        })
     }
 
     render() {
@@ -56,7 +50,9 @@ class Debts extends Component {
                     <Routecard title="Histórico" subtitle="Analise ou encontre dívidas." goTo={() => this.goTo('/home/debtHistory')} />
                 </div>
                 <div className={styles.Table}>
-                    <CustomTable title="Dívidas a vencer (Próximos 30 dias)" header={tableHeader} rows={rows} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
+                    {this.state.debts != null ?
+                    <CustomTable title="Dívidas a vencer (Próximos 30 dias)" header={tableHeader} rows={this.state.debts} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
+                    : null}
                 </div>
             </div>
         )
