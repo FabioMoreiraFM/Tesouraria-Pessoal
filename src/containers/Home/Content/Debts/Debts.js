@@ -7,6 +7,7 @@ import CustomTable from 'components/UI/Table/Table';
 import {withRouter} from 'react-router-dom'
 
 import styles from './Debts.module.css'
+import Spinner from 'components/UI/Spinner/Spinner';
 
 const tableHeader = [
     {name: 'Dívidas', align: 'left', key: 'divida'},
@@ -52,7 +53,7 @@ class Debts extends Component {
                 <div className={styles.Table}>
                     {this.state.debts != null ?
                     <CustomTable title="Dívidas a vencer (Próximos 30 dias)" header={tableHeader} rows={this.state.debts} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
-                    : null}
+                    : <Spinner />}
                 </div>
             </div>
         )
