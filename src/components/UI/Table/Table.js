@@ -38,7 +38,7 @@ const CustomTable = (props) => {
                     <TableRow key={props.rows[row].id}>
                         {
                           props.header.map((column) => (
-                            <TableCell key={column.key} align={column.align}>{props.rows[row][column.key]}</TableCell>    
+                            <TableCell key={column.key} align={column.align}>{column.format ? column.format(props.rows[row][column.key]) :  props.rows[row][column.key]}</TableCell>    
                           ))                
                         }
                     </TableRow>

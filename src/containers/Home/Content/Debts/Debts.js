@@ -11,8 +11,8 @@ import Spinner from 'components/UI/Spinner/Spinner';
 
 const tableHeader = [
     {name: 'Dívidas', align: 'left', key: 'divida'},
-    {name: 'Valor', align: 'center', key: 'valor'},
-    {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento'},
+    {name: 'Valor', align: 'center', key: 'valor', format: (value) => parseFloat(value).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})},
+    {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento', format: (value) => new Date(value).toLocaleDateString('pt-BR', {timeZone: "UTC"})},
     {name: 'Tipo de Dívida', align: 'center', key: 'tipoDivida'},
     {name: 'Possui Juros ou Multa?', align: 'center', key: 'jurosOuMulta'},
     {name: 'Impacto Financeiro em Caso de Atraso', align: 'center', key: 'impactoAtraso'}

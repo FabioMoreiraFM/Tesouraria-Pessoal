@@ -21,8 +21,8 @@ import * as materialStyles from './MaterialUIStyles'
 
 const tableHeader = [
     {name: 'Dívidas', align: 'left', key: 'divida'},
-    {name: 'Valor', align: 'center', key: 'valor'},
-    {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento'},
+    {name: 'Valor', align: 'center', key: 'valor', format: (value) => parseFloat(value).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})},
+    {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento', format: (value) => new Date(value).toLocaleDateString('pt-BR', {timeZone: "UTC"})},
     {name: 'Tipo de Dívida', align: 'center', key: 'tipoDivida'},
     {name: 'Possui Juros ou Multa?', align: 'center', key: 'jurosOuMulta'},
     {name: 'Impacto Financeiro em Caso de Atraso', align: 'center', key: 'impactoAtraso'},
@@ -45,23 +45,25 @@ const Manager = () => {
     const [divida, setDivida] = React.useState("")
     const [valor, setValor] = React.useState("")
     const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const [currentKey, setCurrentKey] = React.useState(null)
 
     const debtsRef = React.useRef(debts)
 
     const classesButton = materialStyles.useStylesButton();
     const input = materialStyles.useStylesInput();
 
-    const editDebt = (key) => {
+    const editDebt = React.useCallback((key) => {
         const debt = debtsRef.current[key];
 
         setDivida(debt.divida)
         setValor(debt.valor)
         setImpacto(debt.impactoAtraso)
         setTipoDivida(debt.tipoDivida)
-        setSelectedDate(debt.dtVencimento)
-    }
+        setSelectedDate(new Date(new Date(debt.dtVencimento).toLocaleString('sv-SE', { timeZone: 'UTC' })))
+        setCurrentKey(key)
+    }, [])
 
-    const deleteDebt = (key) => {
+    const deleteDebt = React.useCallback((key) => {
         let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts/"+key+".json";
         axios.delete(url)
             .then(() => {
@@ -72,10 +74,9 @@ const Manager = () => {
                 setDebts(newDebtObject)
             }
             )
+    }, [])
 
-    }
-
-    const actionButtons = (key) => (
+    const actionButtons = React.useCallback((key) => (
         <React.Fragment>
             <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => editDebt(key)}>
                 <EditIcon color="primary" />
@@ -84,7 +85,7 @@ const Manager = () => {
                 <DeleteIcon color="error"/>
             </IconButton>
         </React.Fragment>
-    )
+    ), [editDebt, deleteDebt])
       
     React.useEffect(() => {
         let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts.json";
@@ -99,7 +100,34 @@ const Manager = () => {
             debtsRef.current = debtObjects
             setDebts(debtObjects)
         })
-    }, [])
+    }, [actionButtons])
+
+    const salvar = () => {
+        let newKey = currentKey != null ? currentKey : "divida7"
+        
+        console.log(debts)
+        console.log(newKey)
+
+        let newDebt = {
+            divida,
+            id: 9,
+            impactoAtraso: impacto,
+            tipoDivida,
+            valor,
+            dtVencimento: new Date(selectedDate).toLocaleDateString('sv-SE', { timeZone: 'UTC' }),
+            jurosOuMulta: "Sim"
+        }
+
+        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts/" + newKey + ".json";
+        axios.put(url, newDebt)
+
+        newDebt['acoes'] = actionButtons(newKey)
+        
+        let xd = {...debts}
+        xd[newKey] = newDebt
+
+        setDebts(xd)
+    }
 
     return (
         <React.Fragment>
@@ -125,7 +153,7 @@ const Manager = () => {
                 </Grid>
                 <Grid container item xd ={12} spacing={3}>
                     <Grid item xs={4}>
-                        <DateInput classes={{root: input.root}} label="Data de Vencimento" onChange={(date) => setSelectedDate(date)} value={selectedDate}/>
+                        <DateInput classes={{root: input.root}} label="Data de Vencimento" onChange={(date) => { console.log(date); setSelectedDate(date) }} value={selectedDate}/>
                     </Grid>
                     <Grid item xs={4}>
                         <FormControl classes={{root: input.root}}>
@@ -141,7 +169,7 @@ const Manager = () => {
                 </Grid>                
                 <Grid container item xd={12} spacing={3}>
                     <Grid item xs={4}>
-                        <Button variant="contained" classes={{root: classesButton.root}}>
+                        <Button variant="contained" classes={{root: classesButton.root}} onClick={() => salvar()}>
                             Salvar
                         </Button>
                     </Grid>
