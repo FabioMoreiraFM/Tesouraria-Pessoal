@@ -19,16 +19,6 @@ import Spinner from 'components/UI/Spinner/Spinner';
 import styles from './Manager.module.css'
 import * as materialStyles from './MaterialUIStyles'
 
-const tableHeader = [
-    {name: 'Dívidas', align: 'left', key: 'divida'},
-    {name: 'Valor', align: 'center', key: 'valor', format: (value) => parseFloat(value).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})},
-    {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento', format: (value) => new Date(value).toLocaleDateString('pt-BR', {timeZone: "UTC"})},
-    {name: 'Tipo de Dívida', align: 'center', key: 'tipoDivida'},
-    {name: 'Possui Juros ou Multa?', align: 'center', key: 'jurosOuMulta'},
-    {name: 'Impacto Financeiro em Caso de Atraso', align: 'center', key: 'impactoAtraso'},
-    {name: 'Ações', align: 'center', key: 'acoes'}
-]
-
 const handleChangePage = (event, newPage) => {
 
 };
@@ -45,38 +35,66 @@ const Manager = () => {
     const [divida, setDivida] = React.useState("")
     const [valor, setValor] = React.useState("")
     const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const [jurosOuMulta, setJurosOuMulta] = React.useState("")
     const [currentKey, setCurrentKey] = React.useState(null)
-
-    const debtsRef = React.useRef(debts)
 
     const classesButton = materialStyles.useStylesButton();
     const input = materialStyles.useStylesInput();
 
-    const editDebt = React.useCallback((key) => {
-        const debt = debtsRef.current[key];
+    React.useEffect(() => {
+        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts.json";
+        axios.get(url)
+        .then(response => {
+            let debtObjects = response.data
+            Object.keys(debtObjects).map((key) => debtObjects[key]['acoes'] = key)
+            setDebts(debtObjects)
+        })
+    }, [])
+
+    const tableHeader = [
+        {name: 'Dívidas', align: 'left', key: 'divida'},
+        {name: 'Valor', align: 'center', key: 'valor', format: (value) => parseFloat(value).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})},
+        {name: 'Data de Vencimento', align: 'center', key: 'dtVencimento', format: (value) => new Date(value).toLocaleDateString('pt-BR', {timeZone: "UTC"})},
+        {name: 'Tipo de Dívida', align: 'center', key: 'tipoDivida'},
+        {name: 'Possui Juros ou Multa?', align: 'center', key: 'jurosOuMulta'},
+        {name: 'Impacto Financeiro em Caso de Atraso', align: 'center', key: 'impactoAtraso'},
+        {name: 'Ações', align: 'center', key: 'acoes', format: (value) => actionButtons(value)}
+    ]
+
+    const editDebt = (key) => {
+        const debt = debts[key];
 
         setDivida(debt.divida)
         setValor(debt.valor)
         setImpacto(debt.impactoAtraso)
         setTipoDivida(debt.tipoDivida)
         setSelectedDate(new Date(new Date(debt.dtVencimento).toLocaleString('sv-SE', { timeZone: 'UTC' })))
+        setJurosOuMulta(debt.jurosOuMulta)
         setCurrentKey(key)
-    }, [])
+    }
 
-    const deleteDebt = React.useCallback((key) => {
-        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts/"+key+".json";
-        axios.delete(url)
-            .then(() => {
-                let newDebtObject = {...debtsRef.current}
-                delete newDebtObject[key]
+    const limpar = () => {
+        setDivida('')
+        setValor('')
+        setImpacto('')
+        setTipoDivida('')
+        setSelectedDate(new Date())
+        setJurosOuMulta('')
+        setCurrentKey(null)        
+    }
+
+    const deleteDebt = (key) => {
+        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts/"+key+".json";        
         
-                debtsRef.current = newDebtObject
-                setDebts(newDebtObject)
-            }
-            )
-    }, [])
+        axios.delete(url)
+        .then(() => {
+            let debtsCopy = {...debts}
+            delete debtsCopy[key]            
+            setDebts(debtsCopy)
+        })
+    }
 
-    const actionButtons = React.useCallback((key) => (
+    const actionButtons = (key) => (
         <React.Fragment>
             <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => editDebt(key)}>
                 <EditIcon color="primary" />
@@ -85,48 +103,31 @@ const Manager = () => {
                 <DeleteIcon color="error"/>
             </IconButton>
         </React.Fragment>
-    ), [editDebt, deleteDebt])
+    )
       
-    React.useEffect(() => {
-        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts.json";
-        axios.get(url)
-        .then(response => {
-            let debtObjects = {...response.data}
-
-            for (let key in debtObjects) {
-                debtObjects[key]['acoes'] = actionButtons(key)
-            }
-            
-            debtsRef.current = debtObjects
-            setDebts(debtObjects)
-        })
-    }, [actionButtons])
-
     const salvar = () => {
-        let newKey = currentKey != null ? currentKey : "divida7"
-        
-        console.log(debts)
-        console.log(newKey)
-
+        let newKey = currentKey || Math.random().toString(36).substring(7)
         let newDebt = {
             divida,
-            id: 9,
+            id: Math.random() * (1000 - 1) + 1,
             impactoAtraso: impacto,
             tipoDivida,
-            valor,
+            valor: parseFloat(valor),
             dtVencimento: new Date(selectedDate).toLocaleDateString('sv-SE', { timeZone: 'UTC' }),
-            jurosOuMulta: "Sim"
+            jurosOuMulta: jurosOuMulta
         }
-
         let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/debts/" + newKey + ".json";
+
         axios.put(url, newDebt)
-
-        newDebt['acoes'] = actionButtons(newKey)
-        
-        let xd = {...debts}
-        xd[newKey] = newDebt
-
-        setDebts(xd)
+        .then(() => {
+            newDebt['acoes'] = newKey            
+            
+            let newDebts = {...debts}
+            newDebts[newKey] = newDebt
+    
+            setDebts(newDebts)
+            limpar()
+        })
     }
 
     return (
@@ -153,7 +154,7 @@ const Manager = () => {
                 </Grid>
                 <Grid container item xd ={12} spacing={3}>
                     <Grid item xs={4}>
-                        <DateInput classes={{root: input.root}} label="Data de Vencimento" onChange={(date) => { console.log(date); setSelectedDate(date) }} value={selectedDate}/>
+                        <DateInput classes={{root: input.root}} label="Data de Vencimento" onChange={(date) => setSelectedDate(date)} value={selectedDate}/>
                     </Grid>
                     <Grid item xs={4}>
                         <FormControl classes={{root: input.root}}>
@@ -165,12 +166,26 @@ const Manager = () => {
                                 <MenuItem value={"Educação"}>Educação</MenuItem>
                             </Select>   
                         </FormControl>
-                    </Grid>                   
+                    </Grid>
+                    <Grid item xs={4}>
+                        <FormControl classes={{root: input.root}}>
+                            <InputLabel id="demo-simple-select-label">Possui Juros e/ou Multa?</InputLabel>
+                            <Select labelId="demo-simple-select-label" id="demo-simple-select" value={jurosOuMulta} onChange={(event) => setJurosOuMulta(event.target.value)}>
+                                <MenuItem value={"Sim"}>Sim</MenuItem>
+                                <MenuItem value={"Não"}>Não</MenuItem>
+                            </Select>   
+                        </FormControl>
+                    </Grid>                                       
                 </Grid>                
                 <Grid container item xd={12} spacing={3}>
-                    <Grid item xs={4}>
+                    <Grid item xs={1}>
                         <Button variant="contained" classes={{root: classesButton.root}} onClick={() => salvar()}>
                             Salvar
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button variant="contained" color="secondary" onClick={() => limpar()}>
+                            Cancelar
                         </Button>
                     </Grid>
                 </Grid>                
