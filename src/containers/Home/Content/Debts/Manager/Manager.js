@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CustomTable from 'components/UI/Table/Table';
 import DateInput from 'components/UI/DateInput/DateInput'
 import Spinner from 'components/UI/Spinner/Spinner';
+import Snackbar from 'components/UI/SnackBar/CustomSnackBar'
 
 import styles from './Manager.module.css'
 import * as materialStyles from './MaterialUIStyles'
@@ -27,6 +28,7 @@ const handleChangeRowsPerPage = (event) => {
 
 };
 
+const initialSnackBarState = {message: null, severity: '', autoHideDuration: 4000}
 
 const Manager = () => {
     const [debts, setDebts] = React.useState(null)
@@ -37,6 +39,7 @@ const Manager = () => {
     const [selectedDate, setSelectedDate] = React.useState(new Date());
     const [jurosOuMulta, setJurosOuMulta] = React.useState("")
     const [currentKey, setCurrentKey] = React.useState(null)
+    const [snackbar, setSnackbar] = React.useState(initialSnackBarState)
 
     const classesButton = materialStyles.useStylesButton();
     const input = materialStyles.useStylesInput();
@@ -90,7 +93,9 @@ const Manager = () => {
         .then(() => {
             let debtsCopy = {...debts}
             delete debtsCopy[key]            
+            
             setDebts(debtsCopy)
+            configurarExibicaoSnackbar({message: 'Dívida apagada com sucesso!', severity: 'success'})
         })
     }
 
@@ -126,12 +131,22 @@ const Manager = () => {
             newDebts[newKey] = newDebt
     
             setDebts(newDebts)
+            configurarExibicaoSnackbar({message: 'Dívida '+ (currentKey ? 'editada' : 'cadastrada') +' com sucesso!', severity: 'success'})
             limpar()
         })
     }
 
+    const configurarExibicaoSnackbar = (object) => {
+        setSnackbar({...snackbar, message: object.message, severity: object.severity})
+    }
+
+    const onCloseSnackbar = () => {
+        setSnackbar(initialSnackBarState)
+    }
+
     return (
         <React.Fragment>
+        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} {...snackbar} onClose={onCloseSnackbar}/>
         <div className={styles.Manager}>
             <Grid container spacing={4} >
                 <Grid container item xd={12} spacing={3}>

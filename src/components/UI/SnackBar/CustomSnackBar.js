@@ -10,23 +10,24 @@ export const CustomSnackBar = (props) => {
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
-        if (props.error) {
+        if (props.message) {
             setOpen(true)
-        }
-    }, [props.error])
+        } 
+    }, [props.message])
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
           return;
         }
-    
+
+        props.onClose();            
         setOpen(false);
     };
 
     return (
         <Snackbar anchorOrigin={props.anchorOrigin} open={open} autoHideDuration={props.autoHideDuration} onClose={handleClose}>
             <Alert onClose={handleClose} severity={props.severity}>
-            {props.error}
+            {props.message}
             </Alert>
         </Snackbar>
     );
