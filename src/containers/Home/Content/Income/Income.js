@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Routecard from 'components/Cards/Routecard/Routecard';
+import Routecard from 'components/Cards/RouteCard/RouteCard';
 import CustomTable from 'components/UI/Table/Table';
 
 import styles from './Income.module.css'

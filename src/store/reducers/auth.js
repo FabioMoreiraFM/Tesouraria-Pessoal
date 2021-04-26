@@ -8,12 +8,14 @@ const initialState = {
 }
 
 const authStart = (state, action) => {
+    console.log("START", state)
     return {
-        state
+        ...state
     }
 }
 
 const authSuccess = (state, action) => {
+    console.log("SUC", state)
     return {
         ...state,
         token: action.idToken,
@@ -22,6 +24,7 @@ const authSuccess = (state, action) => {
 }
 
 const authFail = (state, action) => {
+    console.log("FAIL", state)
     return {
         ...state,
         error: getDefaultAuthErrorMessage(action.error.message)
@@ -29,6 +32,7 @@ const authFail = (state, action) => {
 }
 
 const authLogout = (state, action) => {
+    console.log("LOGOUT", state)
     return {
         ...initialState
     }

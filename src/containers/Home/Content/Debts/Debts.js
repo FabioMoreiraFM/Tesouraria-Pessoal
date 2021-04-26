@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Routecard from 'components/Cards/Routecard/Routecard';
+import Routecard from 'components/Cards/RouteCard/RouteCard';
 import CustomTable from 'components/UI/Table/Table';
 
 import {withRouter} from 'react-router-dom'

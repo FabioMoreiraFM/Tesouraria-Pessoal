@@ -63,7 +63,7 @@ const Auth = props => {
         <section className={styles.Auth}>
             {props.isAuthenticated ? <Redirect to='/home/dashboard' /> : null}
 
-            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} message={props.error} autoHideDuration={4000} severity="error"/>
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} message={props.error} autoHideDuration={4000} severity="error" onClose={() => {} } openAndIgnoreMessage/>
 
             <article className={styles.FormDiv}>
                 <header className={styles.FormHeader}>
