@@ -20,6 +20,7 @@ const CustomTable = (props) => {
   
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(event.target.value)
+    setPage(0)
   };
   
   return (
