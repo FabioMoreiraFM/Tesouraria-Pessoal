@@ -12,14 +12,6 @@ import Form from './Form/Form';
 
 import styles from './Manager.module.css'
 
-const handleChangePage = (event, newPage) => {
-
-};
-
-const handleChangeRowsPerPage = (event) => {
-
-};
-
 const Manager = () => {
     const [debts, setDebts] = React.useState(null)        
     const [operation, setOperation] = React.useState({currentKey: null, type: null})
@@ -62,7 +54,7 @@ const Manager = () => {
         </div>     
         <div className={styles.Table}>
             {debts != null ?
-                <CustomTable title="Dívidas Cadastradas" header={tableHeader} rows={debts} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
+                <CustomTable title="Dívidas Cadastradas" header={tableHeader} rows={debts} />
             : <Spinner />}
         </div>    
         </React.Fragment>          

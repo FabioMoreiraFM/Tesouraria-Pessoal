@@ -11,8 +11,16 @@ const useStyles = makeStyles({
 const CustomTable = (props) => {
   const classes = useStyles();
 
-  const rowsPerPage = 5;
-  const page = 0;
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(event.target.value)
+  };
   
   return (
     <Paper>
@@ -33,7 +41,7 @@ const CustomTable = (props) => {
           </TableHead>
           <TableBody>
             {
-              Object.keys(props.rows).map( (row) => {                  
+              Object.keys(props.rows).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map( (row) => {                  
                   return (
                     <TableRow key={props.rows[row].id}>
                         {
@@ -55,8 +63,8 @@ const CustomTable = (props) => {
           count={Object.keys(props.rows).length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={props.handleChangePage}
-          onChangeRowsPerPage={props.handleChangeRowsPerPage}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
         />      
     </Paper>
   );
