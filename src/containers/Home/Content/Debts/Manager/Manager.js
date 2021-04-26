@@ -50,7 +50,7 @@ const Manager = () => {
     return (
         <React.Fragment>        
         <div className={styles.Manager}>
-            <Form debts={debts} setDebts={setDebts} operation={operation}/>            
+            <Form debts={debts} setDebts={setDebts} operation={operation} setOperation={setOperation}/>            
         </div>     
         <div className={styles.Table}>
             {debts != null ?

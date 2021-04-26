@@ -6,13 +6,14 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export const CustomSnackBar = (props) => {    
+const CustomSnackBar = (props) => {    
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
         if (props.message) {
             setOpen(true)
-        } 
+        }
+        
     }, [props.message])
 
     const handleClose = (event, reason) => {
@@ -25,11 +26,16 @@ export const CustomSnackBar = (props) => {
     };
 
     return (
-        <Snackbar anchorOrigin={props.anchorOrigin} open={open} autoHideDuration={props.autoHideDuration} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={props.severity}>
-            {props.message}
-            </Alert>
-        </Snackbar>
+        <React.Fragment>
+        { props.message ?
+            <Snackbar anchorOrigin={props.anchorOrigin} open={open} autoHideDuration={props.autoHideDuration} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={props.severity}>
+                {props.message}
+                </Alert>
+            </Snackbar>
+        : null
+        }
+        </React.Fragment>
     );
 }
 

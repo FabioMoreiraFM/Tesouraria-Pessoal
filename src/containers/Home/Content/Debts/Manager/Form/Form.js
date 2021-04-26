@@ -24,7 +24,7 @@ const Form = (props) => {
     const [selectedDate, setSelectedDate] = React.useState(new Date());
     const [jurosOuMulta, setJurosOuMulta] = React.useState("")    
     const [snackbar, setSnackbar] = React.useState(initialSnackBarState)
-    const {operation, debts, setDebts} = props
+    const {operation, debts, setDebts, setOperation} = props
 
     const classesButton = materialStyles.useStylesButton();
     const input = materialStyles.useStylesInput();
@@ -64,13 +64,14 @@ const Form = (props) => {
         
         if (operation.type === 'edit') {
             editDebt(operation.currentKey)
+            setOperation('')
         }
 
         if (operation.type === 'delete') {
             deleteDebt(operation.currentKey)
+            setOperation('')
         }
-        
-    }, [operation, debts, configurarExibicaoSnackbar, setDebts])
+    }, [operation, debts, configurarExibicaoSnackbar, setDebts, setOperation])
 
     const clean = () => {
         setDivida('')
