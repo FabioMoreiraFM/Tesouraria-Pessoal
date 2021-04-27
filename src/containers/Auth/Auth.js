@@ -28,6 +28,8 @@ const Auth = props => {
     const [password, setPassword] = React.useState('')
     const [confirmPassword, setConfirmPassword] = React.useState('')
 
+    const [message, setMessage] = React.useState('')
+
     const classes = materialStyles.useStylesIcon();
     const classesInput = materialStyles.useStylesInput();
     const classesButton = materialStyles.useStylesButton();
@@ -40,6 +42,10 @@ const Auth = props => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
+    React.useEffect(() => {
+        setMessage(props.error)    
+    }, [props.error, message])
 
     let repeatPasswordField = (
         <Input classes={{root: classesInput.root}} variant="outlined" placeholder={"Repetir Nova Senha"} type={showPassword ? 'text' : 'password'} 
@@ -63,7 +69,7 @@ const Auth = props => {
         <section className={styles.Auth}>
             {props.isAuthenticated ? <Redirect to='/home/dashboard' /> : null}
 
-            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} message={props.error} autoHideDuration={4000} severity="error" onClose={() => {} } openAndIgnoreMessage/>
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} message={message} autoHideDuration={4000} severity="error" onClose={() => {} }/>
 
             <article className={styles.FormDiv}>
                 <header className={styles.FormHeader}>
@@ -97,7 +103,7 @@ const Auth = props => {
                     {isSignIn ? null : repeatPasswordField}
                 </div>
                 <div>
-                    <Button variant="contained" classes={{root: classesButton.root}} onClick={() => props.onTryAuthenticate(email, password, isSignIn)}>
+                    <Button variant="contained" classes={{root: classesButton.root}} onClick={() => {setMessage(''); return props.onTryAuthenticate(email, password, isSignIn)}}>
                         {isSignIn ? 'Entrar' : 'Cadastrar'}
                     </Button>
                 </div>                    
