@@ -18,14 +18,6 @@ const tableHeader = [
     {name: 'Impacto Financeiro em Caso de Atraso', align: 'center', key: 'impactoAtraso'}
 ]
 
-const handleChangePage = (event, newPage) => {
-
-};
-
-const handleChangeRowsPerPage = (event) => {
-
-};
-
 class Debts extends Component {
     state = {
         debts: null
@@ -52,7 +44,7 @@ class Debts extends Component {
                 </div>
                 <div className={styles.Table}>
                     {this.state.debts != null ?
-                    <CustomTable title="Dívidas a vencer (Próximos 30 dias)" header={tableHeader} rows={this.state.debts} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
+                    <CustomTable title="Dívidas a vencer (Próximos 30 dias)" header={tableHeader} rows={this.state.debts} />
                     : <Spinner />}
                 </div>
             </div>
