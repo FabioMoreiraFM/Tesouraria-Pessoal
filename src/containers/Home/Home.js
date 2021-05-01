@@ -18,6 +18,8 @@ import DebtManager from './Content/Debts/Manager/Manager';
 import IncomeManager from './Content/Income/Manager/Manager';
 import HistoricalDebts from './Content/Debts/Historical/Historical';
 import HistoricalIncome from './Content/Income/Historical/Historical';
+import AssetsManager from './Content/Assets/Manager/Manager';
+import HistoricalAssets from './Content/Assets/Historical/Historical';
 
 export class Home extends Component {    
     render() {
@@ -31,6 +33,8 @@ export class Home extends Component {
                 <Route path="/home/incomeManager" render={() => <Content title="Receitas" subtitle="Acompanhe o crescimento das suas receitas, compare suas receitas com as dívidas atuais." icon={<IncomeIcon />}><IncomeManager/></Content>} />
                 <Route path="/home/historicalIncome" render={() => <Content title="Receitas" subtitle="Acompanhe o crescimento das suas receitas, compare suas receitas com as dívidas atuais." icon={<IncomeIcon />}><HistoricalIncome/></Content>} />
                 <Route path="/home/assets" render={() => <Content title="Patrimônio" subtitle="Administre seu patrimônio, visualize seus aportes e rentabilidade mensal." icon={<AssetsIcon />}><Assets/></Content>} />
+                <Route path="/home/assetsManager" render={() => <Content title="Patrimônio" subtitle="Administre seu patrimônio, visualize seus aportes e rentabilidade mensal." icon={<AssetsIcon />}><AssetsManager/></Content>} />
+                <Route path="/home/historicalAssets" render={() => <Content title="Patrimônio" subtitle="Administre seu patrimônio, visualize seus aportes e rentabilidade mensal." icon={<AssetsIcon />}><HistoricalAssets/></Content>} />
             </Switch>
         )
         
