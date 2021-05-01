@@ -37,6 +37,16 @@ const Form = (props) => {
         setSnackbar(initialSnackBarState)
     }
 
+    const clean = React.useCallback(() => {
+        setDivida('')
+        setValor('')
+        setImpacto('')
+        setTipoDivida('')
+        setSelectedDate(new Date())
+        setJurosOuMulta('')
+        setOperation('')
+    }, [setOperation])
+
     React.useEffect( () => {
         const editDebt = (key) => {
             const debt = debts[key];
@@ -59,6 +69,7 @@ const Form = (props) => {
                 
                 setDebts(debtsCopy)
                 configurarExibicaoSnackbar({message: 'Dívida apagada com sucesso!', severity: 'success'})
+                clean()
             })
         }
         
@@ -69,17 +80,7 @@ const Form = (props) => {
         if (operation.type === 'delete') {
             deleteDebt(operation.currentKey)            
         }
-    }, [operation, debts, configurarExibicaoSnackbar, setDebts, setOperation])
-
-    const clean = () => {
-        setDivida('')
-        setValor('')
-        setImpacto('')
-        setTipoDivida('')
-        setSelectedDate(new Date())
-        setJurosOuMulta('')
-        setOperation('')
-    }
+    }, [operation, debts, configurarExibicaoSnackbar, clean, setDebts, setOperation])
 
     const save = () => {
         let newKey = operation.currentKey || Math.random().toString(36).substring(7)
