@@ -3,11 +3,11 @@ import axios from 'axios'
 
 import Routecard from 'components/Cards/RouteCard/RouteCard';
 import CustomTable from 'components/UI/Table/Table';
+import Spinner from 'components/UI/Spinner/Spinner';
 
 import {withRouter} from 'react-router-dom'
 
 import styles from './Debts.module.css'
-import Spinner from 'components/UI/Spinner/Spinner';
 
 const tableHeader = [
     {name: 'Dívidas', align: 'left', key: 'divida'},
@@ -40,7 +40,7 @@ class Debts extends Component {
             <div className={styles.Debts}>
                 <div className={styles.Cards}>
                     <Routecard title="Gerenciar Dívidas" subtitle="Adicione ou edite dívidas." goTo={() => this.goTo('/home/debtManager')} />
-                    <Routecard title="Histórico" subtitle="Analise ou encontre dívidas." goTo={() => this.goTo('/home/debtHistory')} />
+                    <Routecard title="Histórico" subtitle="Analise ou encontre dívidas." goTo={() => this.goTo('/home/historicalDebts')} />
                 </div>
                 <div className={styles.Table}>
                     {this.state.debts != null ?

@@ -39,7 +39,7 @@ class Income extends Component {
             <div className={styles.Income}>
                 <div className={styles.Cards}>
                     <Routecard title="Gerenciar Receitas" subtitle="Adicione ou edite receitas." goTo={() => this.goTo('/home/incomeManager')}  />
-                    <Routecard title="Histórico" subtitle="Analise ou encontre receitas."/>
+                    <Routecard title="Histórico" subtitle="Analise ou encontre receitas." goTo={() => this.goTo('/home/historicalIncome')} />
                 </div>
                 <div className={styles.Table}>
                     {this.state.income != null ?

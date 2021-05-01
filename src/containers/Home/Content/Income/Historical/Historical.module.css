@@ -1,0 +1,19 @@
+.Historical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;    
+    
+    height: 100%;
+}
+
+.Chart {
+    flex-grow: 1;
+
+    height: 38vh;
+    width: 99%;
+}
+
+.Table {
+    align-self: center;
+    width: 90%;    
+}
