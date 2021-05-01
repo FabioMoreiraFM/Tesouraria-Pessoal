@@ -1,6 +1,8 @@
 # Tesouraria-Pessoal
 Site feito em React para consolidar os conhecimentos 
 
+Link com a apresentação visual: https://www.youtube.com/watch?v=MqoUVnfeizM
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
