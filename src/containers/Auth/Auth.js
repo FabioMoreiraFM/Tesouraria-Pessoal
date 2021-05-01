@@ -116,6 +116,9 @@ const Auth = props => {
             </article>
             <footer className={styles.Copyright}>
                 <CopyrightIcon className={styles.Icon}/> Fabio Moreira, todos os direitos reservados. Feito com <FavoriteIcon className={styles.HeartIcon}/> e um pouco de <img className={styles.ReactIcon} src={reactIcon} alt="React Icon"/>.                
+                <div>
+                    Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> - <a href="https://www.freepik.com/photos/background">Background photo created by pvproductions - www.freepik.com</a> 
+                </div>
             </footer>
         </section>
     )
