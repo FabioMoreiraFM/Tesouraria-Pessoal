@@ -14,7 +14,8 @@ import {ReactComponent as AssetsIcon} from 'assets/patrimonio.svg'
 import {ReactComponent as IncomeIcon} from 'assets/receitas.svg'
 
 import styles from './Home.module.css'
-import Manager from './Content/Debts/Manager/Manager';
+import DebtManager from './Content/Debts/Manager/Manager';
+import IncomeManager from './Content/Income/Manager/Manager';
 
 export class Home extends Component {    
     render() {
@@ -22,8 +23,9 @@ export class Home extends Component {
             <Switch>
                 <Route path="/home/dashboard" render={() => <Content title="Painel de Controle" subtitle="Quadros resumitivos com as principais informações para tomadas de decisão." icon={<DashboardIcon />} showNotifications><Dashboard/></Content>} />
                 <Route path="/home/debts" render={() => <Content title="Dívidas" subtitle="Gerencie suas dívidas, acompanhe os prazos para pagamento e as variações ao longo do tempo." icon={<DebtIcon />}><Debts/></Content>} />
-                <Route path="/home/debtManager" render={() => <Content title="Dívidas" subtitle="Gerencie suas dívidas, acompanhe os prazos para pagamento e as variações ao longo do tempo." icon={<DebtIcon />}><Manager/></Content>} />
+                <Route path="/home/debtManager" render={() => <Content title="Dívidas" subtitle="Gerencie suas dívidas, acompanhe os prazos para pagamento e as variações ao longo do tempo." icon={<DebtIcon />}><DebtManager/></Content>} />
                 <Route path="/home/income" render={() => <Content title="Receitas" subtitle="Acompanhe o crescimento das suas receitas, compare suas receitas com as dívidas atuais." icon={<IncomeIcon />}><Income/></Content>} />
+                <Route path="/home/incomeManager" render={() => <Content title="Receitas" subtitle="Acompanhe o crescimento das suas receitas, compare suas receitas com as dívidas atuais." icon={<IncomeIcon />}><IncomeManager/></Content>} />
                 <Route path="/home/assets" render={() => <Content title="Patrimônio" subtitle="Administre seu patrimônio, visualize seus aportes e rentabilidade mensal." icon={<AssetsIcon />}><Assets/></Content>} />
             </Switch>
         )

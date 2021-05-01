@@ -1,55 +1,55 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+
 import Routecard from 'components/Cards/RouteCard/RouteCard';
 import CustomTable from 'components/UI/Table/Table';
 
+import {withRouter} from 'react-router-dom'
+
 import styles from './Income.module.css'
+import Spinner from 'components/UI/Spinner/Spinner';
 
 const tableHeader = [
-    {name: 'Receita', align: 'left'},
-    {name: 'Valor', align: 'center'},
-    {name: 'Data de Recebimento', align: 'center'},
-    {name: 'Evento', align: 'center'},
-    {name: 'Tipo de Receita', align: 'center'}
+    {name: 'Receita', align: 'left', key: 'receita'},
+    {name: 'Valor', align: 'center', key: 'valor', format: (value) => parseFloat(value).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})},
+    {name: 'Data de Recebimento', align: 'center', key: 'dtRecebimento', format: (value) => new Date(value).toLocaleDateString('pt-BR', {timeZone: "UTC"})},
+    {name: 'Evento', align: 'center', key: 'evento'},
+    {name: 'Tipo de Receita', align: 'center', key: 'tipoReceita'}
 ]
 
-function createData(divida, valor, dtRecebimento, evento, tipoReceita) {
-    return {'receita': {valor: divida, position: 'left'}, 
-            'valor': {valor: valor, position: 'center'}, 
-            'dtRecebimento': {valor: dtRecebimento, position: 'center'}, 
-            'evento': {valor: evento, position: 'center'}, 
-            'tipoReceita': {valor: tipoReceita, position: 'center'} 
-        };
-}
-  
-const rows = [
-    createData('Salário', 'R$ 5.000,00', '28/02/2021', 'Mensal', 'CLT'),
-    createData('Dividendos', 'R$ 300,00', '15/02/2021', 'Anual', 'Investimentos'),
-    createData('Aluguel', 'R$ 800,00', '10/02/2021', 'Mensal', 'Investimentos'),
-    createData('Freelancer', 'R$ 4.000,00', '01/03/2021', 'Único', 'PJ')
-];
-
-const handleChangePage = (event, newPage) => {
-
-};
-
-const handleChangeRowsPerPage = (event) => {
-
-};
-
 class Income extends Component {
+    state = {
+        income: null
+    }
+
+    goTo = (link) => {
+        this.props.history.push(link);
+    }
+
+    componentDidMount() {
+        let url = "https://tesouraria-pessoal-default-rtdb.firebaseio.com/income.json";
+        axios.get(url)
+        .then(response => {
+            this.setState({income: response.data})
+        })
+    }
+
     render() {
         return (
             <div className={styles.Income}>
                 <div className={styles.Cards}>
-                    <Routecard title="Gerenciar Receitas" subtitle="Adicione ou edite receitas." />
+                    <Routecard title="Gerenciar Receitas" subtitle="Adicione ou edite receitas." goTo={() => this.goTo('/home/incomeManager')}  />
                     <Routecard title="Histórico" subtitle="Analise ou encontre receitas."/>
                 </div>
                 <div className={styles.Table}>
-                    <CustomTable title="Receitas do Mês" header={tableHeader} rows={rows} handleChangePage={handleChangePage} handleChangeRowsPerPage={handleChangeRowsPerPage} />
+                    {this.state.income != null ?
+                        <CustomTable title="Receitas do Mês" header={tableHeader} rows={this.state.income} />
+                        : <Spinner />
+                    }
                 </div>
             </div>
         )
     }
 }
 
-export default Income;
+export default withRouter(Income);

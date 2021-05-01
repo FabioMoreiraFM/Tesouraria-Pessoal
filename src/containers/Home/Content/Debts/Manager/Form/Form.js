@@ -64,12 +64,10 @@ const Form = (props) => {
         
         if (operation.type === 'edit') {
             editDebt(operation.currentKey)
-            setOperation('')
         }
 
         if (operation.type === 'delete') {
-            deleteDebt(operation.currentKey)
-            setOperation('')
+            deleteDebt(operation.currentKey)            
         }
     }, [operation, debts, configurarExibicaoSnackbar, setDebts, setOperation])
 
@@ -80,10 +78,11 @@ const Form = (props) => {
         setTipoDivida('')
         setSelectedDate(new Date())
         setJurosOuMulta('')
+        setOperation('')
     }
 
     const save = () => {
-        let newKey = props.currentKey || Math.random().toString(36).substring(7)
+        let newKey = operation.currentKey || Math.random().toString(36).substring(7)
         let newDebt = {
             divida,
             id: Math.random() * (1000 - 1) + 1,
@@ -103,7 +102,7 @@ const Form = (props) => {
             newDebts[newKey] = newDebt
     
             setDebts(newDebts)
-            configurarExibicaoSnackbar({message: 'Dívida '+ (props.currentKey ? 'editada' : 'cadastrada') +' com sucesso!', severity: 'success'})
+            configurarExibicaoSnackbar({message: 'Dívida '+ (operation.currentKey ? 'editada' : 'cadastrada') +' com sucesso!', severity: 'success'})
             clean()
         })
     }
